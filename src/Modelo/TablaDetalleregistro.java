@@ -11,8 +11,42 @@ public class TablaDetalleregistro {
     int cantidad;
     double precio;
     double total;
+    double totaldetotal;
+    double descuento;
+    double cambio;
+    double pagos;
 
-   
+    public double getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(double pagos) {
+        this.pagos = pagos;
+    }
+    public double getTotaldetotal() {
+        return totaldetotal;
+    }
+
+    public void setTotaldetotal(double totaldetotal) {
+        this.totaldetotal = totaldetotal;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public double getCambio() {
+        return cambio;
+    }
+
+    public void setCambio(double cambio) {
+        this.cambio = cambio;
+    }
+
     public double getTotal() {
         return precio * cantidad;
     }
@@ -28,7 +62,8 @@ public class TablaDetalleregistro {
     public String getDescripcion() {
         return descripcion;
     }
-     public void setDescripcion(String descripcion) {
+
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -49,10 +84,7 @@ public class TablaDetalleregistro {
     }
 
     public void setTotal(double precio) {
-  this.total = this.cantidad * this.precio;
-}
-    
+        this.total = this.cantidad * this.precio;
     }
 
-   
-
+}

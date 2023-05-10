@@ -10,7 +10,9 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import vista.Principal;
 
 /**
@@ -37,12 +39,6 @@ public class ImprimirTicket {
 
     private class FormatoImprecion implements Printable {
 
-        double subtotal;
-        double total;
-        int decuento;
-
-        VentasModelo cal = new VentasModelo();
-
         private VentasModelo venta;
 
         public FormatoImprecion(VentasModelo venta) {
@@ -60,7 +56,7 @@ public class ImprimirTicket {
             int y = 20;
             print.setFont(new Font("Monospaced", Font.BOLD, 13) {
             });
-            print.drawString("Punto de venta Tec", 60, y);
+            print.drawString("Farmcia santacruz", 60, y);
             y += 15;
 
             print.setFont(new Font("Monospaced", Font.PLAIN, 12) {
@@ -71,49 +67,88 @@ public class ImprimirTicket {
             print.drawString(format.format(venta.getFecha()), 80, y);
             y += 20;
 
-            print.drawLine(0, y, 300, y);
+            print.drawLine(0, y, 230, y);
             y += 20;
-            print.setFont(new Font("Monospaced", Font.BOLD, 10) {
+            print.setFont(new Font("Monospaced", Font.BOLD, 7) {
             });
             print.drawString("Concepto", 7, y);
-            print.drawString("Cantidad", 120, y);
-            print.drawString("" + "Precio", 200, y);
-            print.drawString("" + "Total", 260, y);
+            print.drawString("Cantidad", 75, y);
+            print.drawString("" + "Precio", 140, y);
+            print.drawString("" + "Total", 200, y);
             y += 5;
-            print.drawLine(0, y, 300, y);
+            print.drawLine(0, y, 230, y);
 
-            y += 20;
-            print.setFont(new Font("Monospaced", Font.PLAIN, 10) {
+            y += 15;
+         
+            print.setFont(new Font("Monospaced", Font.PLAIN, 7) {
             });
             for (TablaDetalleregistro item : venta.getDetalle()) {
                 print.drawString(item.getDescripcion(), 7, y);
-                print.drawString("" + item.getCantidad(), 140, y);
-                print.drawString("" + item.getPrecio(), 205, y);
-                print.drawString("" + item.getTotal(), 263, y);
+                print.drawString("" + item.getCantidad(), 92, y);
+                print.drawString("" + item.getPrecio(), 142, y);
+                print.drawString("" + item.getTotal(), 202, y);
                 y += 15;
             }
-            y += 5;
-            print.drawLine(0, y, 300, y);
-            print.setFont(new Font("Monospaced", Font.BOLD, 12) {
+           
+            print.drawLine(0, y, 230, y);
+            print.setFont(new Font("Monospaced", Font.BOLD, 8) {
             });
             y += 15;
-            cal.setSubtotal(subtotal);
-            cal.setTotal(total);
-            cal.setDescuento(decuento);
-            String totales = Double.toString(total);
-            String subtototales = Double.toString(subtotal);
-            String descuentos = Double.toString(decuento);
-            print.drawString("" + totales, 7, y);
+            double subtotal = venta.getSubtotal();
+            double total = venta.getTotal();
+            int descuento = venta.getDescuento();
+            double cambio = venta.getCambio();
+            double pago = venta.getPago();
+int xx =100;
+int x= 200;
+            print.drawString("" + subtotal + "$", x, y);
+            print.drawString("SUBTOTAL", xx, y);
             y += 15;
-            print.drawString("" + subtototales, 7, y);
+           
+            print.drawString("" + descuento + "%", x, y);
+            print.drawString("Descuento", xx, y);
             y += 15;
-            print.drawString("" + descuentos, 7, y);
+             print.drawString("" + total + "$", x, y);
+            print.drawString("Total a pagar ", xx, y);
             y += 15;
-            print.drawString("    Vuelva Pronto  ", 7, y);
+            print.drawString("" + pago + "$", x, y);
+            print.drawString("Pago", xx, y);
+            y += 15;
+            print.drawString("" + cambio + "$", x, y);
+            print.drawString("Cambio", xx, y);
+            y += 15;
+
+            print.drawString("Gracias por su compra", xx, y);
 
             return Printable.PAGE_EXISTS;
 
         }
 
+
+        public void pritnTicket(VentasModelo venta) {
+    PrinterJob impresora = PrinterJob.getPrinterJob();
+    impresora.setPrintable(new FormatoImprecion(venta));
+    boolean quieroImprimir = impresora.printDialog();
+    if (quieroImprimir) {
+        boolean imprimir = true;
+        // Agregar diálogo de confirmación de cancelación
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la impresión?", "Cancelar impresión", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            imprimir = false;
+        }
+        if (imprimir) {
+            try {
+                impresora.print();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("No puedo imprimir");
+            }
+        }
     }
+}
+
+    }
+    
+   
+        
 }

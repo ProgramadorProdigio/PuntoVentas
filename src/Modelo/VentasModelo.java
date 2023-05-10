@@ -12,8 +12,10 @@ public class VentasModelo{
     private String folio;
     private Date fecha;
     private double subtotal;
-    private double descuento;
+    private int descuento;
     private double total;
+    private double cambio;
+    private  double pago;
 private List <TablaDetalleregistro> detalle;
 
     public List<TablaDetalleregistro> getDetalle() {
@@ -47,7 +49,7 @@ private List <TablaDetalleregistro> detalle;
         this.subtotal = subtotal;
     }
 
-    public double getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
@@ -61,6 +63,22 @@ private List <TablaDetalleregistro> detalle;
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getCambio() {
+        return cambio;
+    }
+
+    public void setCambio(double cambio) {
+        this.cambio = cambio;
+    }
+
+    public double getPago() {
+        return pago;
+    }
+
+    public void setPago(double pago) {
+        this.pago = pago;
     }
     
     
