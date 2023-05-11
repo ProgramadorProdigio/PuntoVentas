@@ -9,6 +9,7 @@ import java.util.List;
  * @author Miguel Angel Lara Hermosillo
  */
 public class VentasModelo{
+    private String porcentaje;
     private String folio;
     private Date fecha;
     private double subtotal;
@@ -80,6 +81,14 @@ public class VentasModelo{
 
     public void setPago(double pago) {
         this.pago = pago;
+    }
+
+    public String getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(String porcentaje) {
+        this.porcentaje = porcentaje;
     }
 
   
