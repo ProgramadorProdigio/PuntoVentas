@@ -16,7 +16,8 @@ public class VentasModelo{
     private double total;
     private double cambio;
     private  double pago;
-private List <TablaDetalleregistro> detalle;
+  
+    private List <TablaDetalleregistro> detalle;
 
     public List<TablaDetalleregistro> getDetalle() {
         return detalle;
@@ -80,6 +81,8 @@ private List <TablaDetalleregistro> detalle;
     public void setPago(double pago) {
         this.pago = pago;
     }
+
+  
     
     
     

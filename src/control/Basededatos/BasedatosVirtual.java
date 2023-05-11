@@ -94,6 +94,7 @@ public boolean obtenerProductoPorCodigo(String codigoAntiguo){
     return original;
     }
  
+ 
     public boolean guardarventa(VentasModelo venta){
         boolean res = ArchivoXML.guardarVenta(venta);
         return res;
