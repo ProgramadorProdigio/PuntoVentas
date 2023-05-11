@@ -8,16 +8,23 @@ import Modelo.Ventasregistros;
 import Util.ImprimirTicket;
 import control.Basededatos.BasedatosVirtual;
 import control.archivos.ArchivoBinario;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Frame;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
 import vista.ventas.Ventas;
 
 /**
@@ -26,14 +33,17 @@ import vista.ventas.Ventas;
  */
 public class Principal extends javax.swing.JFrame {
 
-    private List<TablaDetalleregistro> detalle;
+    public List<TablaDetalleregistro> detalle;
     private BasedatosVirtual ab;
-    private int folio;
-    private double total;
+    private int folio;// se alamcena el folio o numero de ticket
+    private double total; // alamacena el total de toda la venta
     private Clientes clientes; // variable miembro de la clase para mantener la instancia de la clase Clientes
     private JFrame frame; // variable miembro de la clase para mantener la instancia del JFrame
-    public double sub;
-    public double totales;
+    public double sub; // almacena el subtotal de la venata
+    private int descuento; // Almacena el descuento de compra
+    private double pagos; // varaiable que almacena el monto ingresado
+    private double cambio; // varaible que almacena el cambio
+     public String codigo;
 
     /**
      * Creates new form Principal
@@ -60,6 +70,8 @@ public class Principal extends javax.swing.JFrame {
         jLTicket.setText(foli);
         jtModificarCantidad.setText("Ingresa cantidad");
         jtModificarCantidad.setForeground(Color.GRAY);
+        // Crea un nuevo CardLayout y un JPanel que servirá como contenedor
+
     }
 
     private TablaDetalleregistro buscarRegistro(String codigoProducto) {
@@ -71,10 +83,11 @@ public class Principal extends javax.swing.JFrame {
         return null;
     }
 
-    private double actualizarVenta() {
+    public double actualizarVenta() {
 
-        String[] colums = {"Cantidad", "codigo", "Descripcion", "Precio", "Total"};
+        String[] colums = {"Cantidad", "Descripcion", "Precio", "Total"};
         String[][] datos = extraerDatos();
+
         DefaultTableModel model = new DefaultTableModel(datos, colums);
         jtablaVentas.setModel(model);
 
@@ -93,23 +106,24 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private String[][] extraerDatos() {
-        String[][] datos = new String[detalle.size()][5]; // Inicializa una matriz con el tamaño de la lista detalle y con 4 columnas.
+        String[][] datos = new String[detalle.size()][4]; // Inicializa una matriz con el tamaño de la lista detalle y con 4 columnas.
         int i = 0; // Inicializa el índice del arreglo en cero.
         double subtotal = 0; // Inicializa el total de la venta en cero.
         for (TablaDetalleregistro registro : detalle) { // Recorre la lista detalle.
             datos[i][0] = "" + registro.getCantidad(); // Agrega la cantidad a la columna 0 de la fila actual.
-            datos[i][1] = registro.getCodigo(); // Agrega el codigo a la columna 1 de la fila actual.
-            datos[i][2] = registro.getDescripcion(); // Agrega la descripción a la columna 2 de la fila actual.
-            datos[i][3] = String.format("%.2f", registro.getPrecio()); // Agrega el precio con formato a la columna 2 de la fila actual.
-            datos[i][4] = String.format("%.2f", registro.getTotal()); // Agrega el total con formato a la columna 3 de la fila actual.
+            datos[i][1] = registro.getDescripcion(); // Agrega la descripción a la columna 2 de la fila actual.
+            datos[i][2] = String.format("%.2f", registro.getPrecio()); // Agrega el precio con formato a la columna 2 de la fila actual.
+            datos[i][3] = String.format("%.2f", registro.getTotal()); // Agrega el total con formato a la columna 3 de la fila actual.
+
             i++; // Incrementa el índice del arreglo.
             subtotal += registro.getTotal(); // Agrega el total de la fila actual al total de la venta.
 
         }
-        jLSUB.setText(String.format("%.2f", subtotal)); // Actualiza el valor del subtotal en la etiqueta jLSUB.
-        jLTotal.setText(String.format("%.2f", subtotal));
-
         total = subtotal;
+        jLSUB.setText(String.format("%.2f", subtotal)); // Actualiza el valor del subtotal en la etiqueta jLSUB.
+        jLTotal.setText(String.format("%.2f", total));
+
+        sub = subtotal;
         return datos; // Retorna la matriz con los datos extraídos.
     }
 
@@ -118,6 +132,17 @@ public class Principal extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
         return sdf.format(calendar.getTime());
     }
+
+    // Metofo que permite saber la hora actual
+    public static String getHoraActual() {
+        LocalTime horaActual = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm:ss a");
+        String horaFormateada = horaActual.format(formatter);
+
+        return horaFormateada;
+
+    }
+
     OperacionesBasedatos bd;
 
     /**
@@ -146,7 +171,6 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         navegacionPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -183,12 +207,12 @@ public class Principal extends javax.swing.JFrame {
         JLPago = new javax.swing.JTextField();
         Error1 = new javax.swing.JLabel();
         Error2 = new javax.swing.JLabel();
+        Error4 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jtModificarCantidad = new javax.swing.JTextField();
         ErrorCantidad = new javax.swing.JLabel();
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imag/electro.png"))); // NOI18N
+        btnBuscarnombre = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Centrado");
@@ -324,6 +348,11 @@ public class Principal extends javax.swing.JFrame {
 
         btnClientes.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -447,6 +476,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jLDescuento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jLDescuentoFocusLost(evt);
+            }
+        });
         jLDescuento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jLDescuentoActionPerformed(evt);
@@ -458,6 +492,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        JLPago.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JLPagoFocusLost(evt);
+            }
+        });
+        JLPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JLPagoActionPerformed(evt);
+            }
+        });
         JLPago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JLPagoKeyReleased(evt);
@@ -469,6 +513,9 @@ public class Principal extends javax.swing.JFrame {
 
         Error2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         Error2.setForeground(new java.awt.Color(255, 51, 51));
+
+        Error4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Error4.setText("s");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -511,6 +558,10 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(Error2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Error4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,7 +589,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(Error2)
                 .addGap(37, 37, 37)
                 .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
+                .addGap(18, 18, 18)
+                .addComponent(Error4)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(cam)
                     .addComponent(jLCambio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -578,6 +631,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarnombre.setText("Buscar por nombre");
+        btnBuscarnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarnombreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navegacionPanelLayout = new javax.swing.GroupLayout(navegacionPanel);
         navegacionPanel.setLayout(navegacionPanelLayout);
         navegacionPanelLayout.setHorizontalGroup(
@@ -588,35 +648,40 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(navegacionPanelLayout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
-                                .addGap(190, 190, 190)
-                                .addComponent(btnGuardarcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVacairLista, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(118, 118, 118))
+                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addGap(78, 78, 78))
                             .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(67, 67, 67))
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
+                                        .addGap(190, 190, 190)
+                                        .addComponent(btnGuardarcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnEliminar)
-                                        .addGap(80, 80, 80))
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
+                                        .addComponent(btnVacairLista, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(118, 118, 118))
+                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                        .addGap(87, 87, 87)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
+                                        .addGap(71, 71, 71)
+                                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                                .addGap(41, 41, 41)
+                                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                                        .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(159, 159, 159)
+                                                        .addComponent(btnBuscarnombre))
+                                                    .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnEliminar)
+                                                .addGap(80, 80, 80))
+                                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)))
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         navegacionPanelLayout.setVerticalGroup(
             navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -636,7 +701,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminar)
                             .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuscarnombre))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ErrorCantidad)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -648,10 +715,10 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(navegacionPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(941, Short.MAX_VALUE))
+                .addContainerGap(927, Short.MAX_VALUE))
         );
 
-        getContentPane().add(navegacionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1880));
+        getContentPane().add(navegacionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1470, 1880));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -670,10 +737,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarcompraActionPerformed
 
     private void btnRegistroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroVentasActionPerformed
-        Ventas ventanas = new Ventas(this, true);
-        ventanas.setLocationRelativeTo(this);
-        ventanas.setVisible(true);
-        ventanas.setResizable(false);
+
     }//GEN-LAST:event_btnRegistroVentasActionPerformed
 
     private void vtrProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vtrProductosActionPerformed
@@ -706,6 +770,8 @@ public class Principal extends javax.swing.JFrame {
                 detalle.remove(registroAEliminar);
                 detalle.remove(filaSeleccionada); // Eliminar el registro de la lista detalle
                 // Actualizar la tabla de ventas
+                jLDescuento.setText(" ");
+                JLPago.setText(" ");
                 actualizarVenta();
                 System.out.println("Producto eliminado exitosamente");
             } else { // Si el usuario cancela la operación
@@ -727,15 +793,20 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("La tabla está vacía");
             JOptionPane.showMessageDialog(null, "Lo sentimos no se puede realizar el cobro intente de nuevo");
         } else {
-
-            pago();
-
+            if (pagos < total) {
+                Error4.setText("pago insuficiente");
+                Error4.setVisible(true);
+            }else{
             VentasModelo venta = new VentasModelo();
-
             venta.setFolio("" + folio);
             venta.setFecha(Calendar.getInstance().getTime());
+            venta.setSubtotal(sub);
             venta.setTotal(total);
             venta.setDetalle(detalle);
+            venta.setDescuento(descuento);
+            venta.setCambio(cambio);
+            venta.setPago(pagos);
+
             if (ab.guardarventa(venta)) {
                 System.out.println("Imprimiendo ");
                 ImprimirTicket imprimir = new ImprimirTicket();
@@ -752,22 +823,20 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Ocurrio un error");
             }
-            System.out.println("cobro con exito");
-            JLPago.setText("");
-            jLDescuento.setText("");
+
+        }
         }
 
-
     }//GEN-LAST:event_btnCobrarActionPerformed
-
+// cada ves que se ingresa un caracter desde el teclado automaticamente se ejecuta
     private void jLDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLDescuentoKeyReleased
         hacerDescuento();
     }//GEN-LAST:event_jLDescuentoKeyReleased
-
+// cada ves que se ingresa un caracter desde el teclado automaticamente se ejecuta
     private void JLPagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JLPagoKeyReleased
-   pago();
+        pago();
     }//GEN-LAST:event_JLPagoKeyReleased
-
+//FocusGained es un evento importante en Java que permite a las aplicaciones detectar cuándo un componente ha ganado el enfoque del usuario y tomar medidas en consecuencia.
     private void jtModificarCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtModificarCantidadFocusGained
 
         if (jtModificarCantidad.getText().equals("Ingresa cantidad")) {
@@ -783,81 +852,148 @@ public class Principal extends javax.swing.JFrame {
         cantidad();
 
     }//GEN-LAST:event_jtModificarCantidadActionPerformed
-
+// cada ves que se seleccione el apartado y despues se seleccione aprarecera los mensajes de abajo
     private void jtModificarCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtModificarCantidadFocusLost
         jtModificarCantidad.setText("Ingresa cantidad");
         jtModificarCantidad.setForeground(Color.GRAY);
-         ErrorCantidad.setText(" ");
-       ErrorCantidad.setVisible(true);
+        ErrorCantidad.setText(" ");
+        ErrorCantidad.setVisible(true);
     }//GEN-LAST:event_jtModificarCantidadFocusLost
 
     private void ErrorCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ErrorCantidadFocusLost
-       
+
     }//GEN-LAST:event_ErrorCantidadFocusLost
 
+    private void JLPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLPagoActionPerformed
+
+    }//GEN-LAST:event_JLPagoActionPerformed
+
+    private void jLDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLDescuentoFocusLost
+        Error1.setText("");
+        Error1.setVisible(true);
+    }//GEN-LAST:event_jLDescuentoFocusLost
+
+    private void JLPagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JLPagoFocusLost
+        Error2.setText("");
+        Error2.setVisible(true);
+    }//GEN-LAST:event_JLPagoFocusLost
+
+    private void btnBuscarnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarnombreActionPerformed
+        System.out.println("FUNCIONA");
+        Ventas ventanas = new Ventas(this, true);
+        ventanas.setLocationRelativeTo(this);
+        ventanas.setResizable(false);
+        ventanas.setVisible(true);
+        
+   //recuperar codigo
+   
+   String codigo = ventanas.getCodigo();
+        if (codigo != null) {
+            System.out.println("Si llego"+codigo);
+   hacerBusqueda2(codigo);
+        }
+        System.out.println("no paso nada");
+
+    }//GEN-LAST:event_btnBuscarnombreActionPerformed
+
+  
+    
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    // metodo para realizar el decuento
     private double hacerDescuento() {
+
         double menosdecuento = 0;
-        // obetener lo del txtfield
+
+// obetener lo del txtfield
         String txtfiel = jLDescuento.getText();
+        try {
 
-        if (txtfiel.isEmpty()) {
-            Error1.setText("El valor del descuento no puede estar vacío");
-            Error1.setVisible(true);
-        } else {
-            //comvertimos 
+            if (txtfiel.isEmpty()) {
+                Error1.setText("El valor del descuento no puede estar vacío");
+                Error1.setVisible(true);
+            } else {
+                //comvertimos 
 
-            double descuento = Double.parseDouble(txtfiel);
-            double subtotal = 0;
+                int descuento = (int) Double.parseDouble(txtfiel);
+                this.descuento = descuento;
 
-            for (TablaDetalleregistro registro : detalle) {
-                subtotal += registro.getTotal();
+                double subtotal = 0;
 
-            }
+                for (TablaDetalleregistro registro : detalle) {
+                    subtotal += registro.getTotal();
+
+                }
 // Calcular el descuento
-            double porcentajeDescuento = descuento;
-            double descuento1 = subtotal * porcentajeDescuento / 100.0;
-            menosdecuento = subtotal - descuento1;
+                double porcentajeDescuento = descuento;
+                double descuento1 = subtotal * porcentajeDescuento / 100.0;
+                menosdecuento = subtotal - descuento1;
+                total = menosdecuento;
+                jLTotal.setText(String.format("%.2f", menosdecuento));
+                System.out.println("Funciona el decuento");
+                Error1.setText("");
+                Error1.setVisible(true);
+            }
 
-            jLTotal.setText(String.format("%.2f", menosdecuento));
-            System.out.println("Funciona el decuento");
-            Error1.setText("");
+        } catch (Exception e) {
+            Error1.setText("solo ingrese numeros pocitivos");
+            Error1.setVisible(true);
+
         }
         return menosdecuento;
-
     }
 
-    private void pago() {
+    // codido donde se hace el pago y se regresa el cambio
+    public double pago() {
 
         double cambio = 0;
 // obetener lo del txtfield
         String importeapagar = JLPago.getText();
         String totalfull = jLTotal.getText();
-        if (importeapagar.isEmpty()) {
-
-        } else {
-            double total = Double.parseDouble(totalfull);
-            double pago = Double.parseDouble(importeapagar);
-            if (pago < total) {
-                Error2.setText("No alcanca");
-                Error2.setVisible(true);
+        try {
+            // verifica que no este vacio el pago
+            if (importeapagar.isEmpty()) {
+                Error2.setText("El valor del pago no puede estar vacío");
+                Error1.setVisible(true);
             } else {
-                cambio = pago - total;
-                System.out.println("cambio " + cambio);
-                Error2.setText(" ");
+
+                double total = Double.parseDouble(totalfull);
+                double pago = Double.parseDouble(importeapagar);
+                pagos = pago;
+
+// verifica si el total es meno que el pago
+                if (pago < total) {
+                    Error2.setText("Insuficiente");
+                    Error2.setVisible(true);
+                } else {
+                    cambio = pago - total;
+                    this.cambio = cambio;
+                    System.out.println("cambio " + cambio);
+                    Error2.setText(" ");
+                    Error2.setVisible(true);
+
+                }
+
             }
 
-        }
+            jLCambio.setText(String.format("%.2f", cambio));
 
-        jLCambio.setText(String.format("%.2f", cambio));
+        } catch (Exception e) {
+            Error2.setText("Solo ingrese numeros");
+            Error2.setVisible(true);
+
+        }
+        return cambio;
     }
 
+    //Metodo que modifica la cantida de productos de un producto
     private int cantidad() {
 
         int aumentacantidad = 0;
         try {
             String cantidadmas = jtModificarCantidad.getText();
-
-         
 
             int filaSeleccionada = jtablaVentas.getSelectedRow(); // Obtiene el índice de la fila seleccionada
 
@@ -865,7 +1001,7 @@ public class Principal extends javax.swing.JFrame {
                 ErrorCantidad.setText("Seleccione un producto");
                 ErrorCantidad.setVisible(true);
             } else {
-                 aumentacantidad = Integer.parseInt(cantidadmas);
+                aumentacantidad = Integer.parseInt(cantidadmas);
                 TablaDetalleregistro producto = detalle.get(filaSeleccionada);
                 producto.setCantidad(aumentacantidad);
                 actualizarVenta();
@@ -882,8 +1018,8 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private void hacerBusqueda() {
-        String codigo = jtbusqueda.getText();
+   public void hacerBusqueda2(String codigos) {
+        String codigo = codigos;
         Producto productoDato = ab.BuscarProductoVenta(codigo);
         if (productoDato != null) {
             // Verificar si ya existe una fila con el mismo código
@@ -893,7 +1029,41 @@ public class Principal extends javax.swing.JFrame {
                 if (registro.getCodigo().equals(codigo)) {
                     // Ya existe una fila con el mismo código, incrementar la cantidad y actualizar el precio total
                     registro.setCantidad(registro.getCantidad() + 1);
+                    registro.setTotal(registro.getCantidad() * registro.getPrecio());
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                // No existe una fila con el mismo código, agregar una nueva fila
+                TablaDetalleregistro producto = new TablaDetalleregistro();
+                producto.setCodigo(productoDato.getCodigo());
+                producto.setCantidad(1);
+                producto.setPrecio(productoDato.getCosto());
+                producto.setDescripcion(productoDato.getDescripcion());
+                producto.setTotal(producto.getPrecio());
+                detalle.add(producto);
+            }
+            // Actualizar el precio total de la venta
+            actualizarVenta();
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no existente");
+        }
+        jtbusqueda.setText("");
+    }
 
+    private void hacerBusqueda() {
+        String codigo = jtbusqueda.getText();
+        
+        Producto productoDato = ab.BuscarProductoVenta(codigo);
+        if (productoDato != null) {
+            // Verificar si ya existe una fila con el mismo código
+            boolean encontrado = false;
+            for (int i = 0; i < detalle.size(); i++) {
+                TablaDetalleregistro registro = detalle.get(i);
+                if (registro.getCodigo().equals(codigo)) {
+                    // Ya existe una fila con el mismo código, incrementar la cantidad y actualizar el precio total
+                    registro.setCantidad(registro.getCantidad() + 1);
                     registro.setTotal(registro.getCantidad() * registro.getPrecio());
                     encontrado = true;
                     break;
@@ -921,9 +1091,11 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Error1;
     private javax.swing.JLabel Error2;
+    private javax.swing.JLabel Error4;
     private javax.swing.JLabel ErrorCantidad;
     public javax.swing.JTextField JLPago;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscarnombre;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnEliminar;
@@ -937,7 +1109,6 @@ public class Principal extends javax.swing.JFrame {
     public javax.swing.JLabel jLSUB;
     private javax.swing.JLabel jLTicket;
     public javax.swing.JLabel jLTotal;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

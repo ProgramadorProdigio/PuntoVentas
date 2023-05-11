@@ -16,6 +16,7 @@ public class EditarProducto extends ActualizarProductos {
         actualizarTitulo ("Editar Producto");
         habilitarCodigo (false); //Este es para deshabilitar código
         cargarDatos(p);
+        
     }
 
     @Override
