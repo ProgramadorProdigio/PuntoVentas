@@ -107,7 +107,7 @@ public class ImprimirTicket {
             print.drawString("SUBTOTAL", xx, y);
             y += 15;
 
-            print.drawString("" + descuento + "%", x, y);
+            print.drawString("" +"("+ descuento +"%) "+venta.getPorcentaje()+"$", 190, y);
             print.drawString("Descuento", xx, y);
             y += 15;
             print.drawString("" + total + "$", x, y);
