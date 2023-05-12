@@ -236,14 +236,14 @@ public class ListaProductos extends javax.swing.JDialog {
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar esto?", "Confirmación", JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.YES_OPTION) {
                 // Código para eliminar el elemento
-
-                // con esto se puede acceder ala lista
-                List<Producto> listaProductos = ArchivoBinario.getProductos();
+                boolean eliminado = cal.Eliminar(filaSeleccionada);
+                
                 /**
+                 *  con esto se puede acceder ala lista
                  * Con la siguiente condicion se actualiza la tabla
                  */
+                List<Producto> listaProductos = ArchivoBinario.getProductos();
 
-                boolean eliminado = cal.Eliminar(filaSeleccionada);
                 if (eliminado) {
                     DefaultTableModel modelo = new DefaultTableModel();
                     modelo.addColumn("Codigo");
