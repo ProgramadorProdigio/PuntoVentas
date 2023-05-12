@@ -21,6 +21,7 @@ public class ControlProductos {
       
         boolean res =  ArchivoBinario.regenerarElArchivo(listaProductos);
         
+        
         return res;
     }
 }
