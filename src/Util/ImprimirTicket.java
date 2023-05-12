@@ -65,8 +65,10 @@ public class ImprimirTicket {
             y += 15;
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             print.drawString(format.format(venta.getFecha()), 80, y);
+            y += 15;
+            String hora = Principal.getHoraActual();
+            print.drawString("Hora " +hora, 80, y);
             y += 20;
-
             print.drawLine(0, y, 230, y);
             y += 20;
             print.setFont(new Font("Monospaced", Font.BOLD, 7) {
@@ -79,7 +81,7 @@ public class ImprimirTicket {
             print.drawLine(0, y, 230, y);
 
             y += 15;
-         
+
             print.setFont(new Font("Monospaced", Font.PLAIN, 7) {
             });
             for (TablaDetalleregistro item : venta.getDetalle()) {
@@ -89,7 +91,7 @@ public class ImprimirTicket {
                 print.drawString("" + item.getTotal(), 202, y);
                 y += 15;
             }
-           
+
             print.drawLine(0, y, 230, y);
             print.setFont(new Font("Monospaced", Font.BOLD, 8) {
             });
@@ -99,16 +101,16 @@ public class ImprimirTicket {
             int descuento = venta.getDescuento();
             double cambio = venta.getCambio();
             double pago = venta.getPago();
-int xx =100;
-int x= 200;
+            int xx = 100;
+            int x = 200;
             print.drawString("" + subtotal + "$", x, y);
             print.drawString("SUBTOTAL", xx, y);
             y += 15;
-           
+
             print.drawString("" + descuento + "%", x, y);
             print.drawString("Descuento", xx, y);
             y += 15;
-             print.drawString("" + total + "$", x, y);
+            print.drawString("" + total + "$", x, y);
             print.drawString("Total a pagar ", xx, y);
             y += 15;
             print.drawString("" + pago + "$", x, y);
@@ -124,31 +126,28 @@ int x= 200;
 
         }
 
-
         public void pritnTicket(VentasModelo venta) {
-    PrinterJob impresora = PrinterJob.getPrinterJob();
-    impresora.setPrintable(new FormatoImprecion(venta));
-    boolean quieroImprimir = impresora.printDialog();
-    if (quieroImprimir) {
-        boolean imprimir = true;
-        // Agregar diálogo de confirmación de cancelación
-        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la impresión?", "Cancelar impresión", JOptionPane.YES_NO_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            imprimir = false;
-        }
-        if (imprimir) {
-            try {
-                impresora.print();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("No puedo imprimir");
+            PrinterJob impresora = PrinterJob.getPrinterJob();
+            impresora.setPrintable(new FormatoImprecion(venta));
+            boolean quieroImprimir = impresora.printDialog();
+            if (quieroImprimir) {
+                boolean imprimir = true;
+                // Agregar diálogo de confirmación de cancelación
+                int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la impresión?", "Cancelar impresión", JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    imprimir = false;
+                }
+                if (imprimir) {
+                    try {
+                        impresora.print();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("No puedo imprimir");
+                    }
+                }
             }
         }
-    }
-}
 
     }
-    
-   
-        
+
 }
