@@ -43,7 +43,8 @@ public class Principal extends javax.swing.JFrame {
     private int descuento; // Almacena el descuento de compra
     private double pagos; // varaiable que almacena el monto ingresado
     private double cambio; // varaible que almacena el cambio
-     public String codigo;
+    
+    private String porcentaje;// varaible que almacena el porcenta que se descintara
 
     /**
      * Creates new form Principal
@@ -649,37 +650,38 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(navegacionPanelLayout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                    .addGap(190, 190, 190)
+                                    .addComponent(btnGuardarcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnVacairLista, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(136, 136, 136))
+                                .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                            .addGap(41, 41, 41)
+                                            .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                                    .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(159, 159, 159)
+                                                    .addComponent(btnBuscarnombre))
+                                                .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
+                                    .addGap(87, 87, 87)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addGap(78, 78, 78))
-                            .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
-                                        .addGap(190, 190, 190)
-                                        .addComponent(btnGuardarcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnVacairLista, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(118, 118, 118))
-                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                        .addGap(87, 87, 87)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, navegacionPanelLayout.createSequentialGroup()
-                                        .addGap(71, 71, 71)
-                                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                                .addGap(41, 41, 41)
-                                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                                        .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(159, 159, 159)
-                                                        .addComponent(btnBuscarnombre))
-                                                    .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnEliminar)
-                                                .addGap(80, 80, 80))
-                                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(18, 18, 18)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEliminar)
+                                    .addComponent(jLabel12))
+                                .addGap(78, 78, 78)))
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
@@ -796,35 +798,35 @@ public class Principal extends javax.swing.JFrame {
             if (pagos < total) {
                 Error4.setText("pago insuficiente");
                 Error4.setVisible(true);
-            }else{
-            VentasModelo venta = new VentasModelo();
-            venta.setFolio("" + folio);
-            venta.setFecha(Calendar.getInstance().getTime());
-            venta.setSubtotal(sub);
-            venta.setTotal(total);
-            venta.setDetalle(detalle);
-            venta.setDescuento(descuento);
-            venta.setCambio(cambio);
-            venta.setPago(pagos);
-
-            if (ab.guardarventa(venta)) {
-                System.out.println("Imprimiendo ");
-                ImprimirTicket imprimir = new ImprimirTicket();
-                imprimir.pritnTicket(venta);
-
-                folio++;
-                jLTicket.setText("" + folio);
-                detalle = new ArrayList<>();
-                String folio = String.format("%05d", this.folio);
-                jLTicket.setText(folio);
-
-                actualizarVenta();
-
             } else {
-                JOptionPane.showMessageDialog(this, "Ocurrio un error");
-            }
+                VentasModelo venta = new VentasModelo();
+                venta.setFolio("" + folio);
+                venta.setFecha(Calendar.getInstance().getTime());
+                venta.setSubtotal(sub);
+                venta.setTotal(total);
+                venta.setDetalle(detalle);
+                venta.setDescuento(descuento);
+                venta.setCambio(cambio);
+                venta.setPago(pagos);
+                venta.setPorcentaje(porcentaje);
+                if (ab.guardarventa(venta)) {
+                    System.out.println("Imprimiendo ");
+                    ImprimirTicket imprimir = new ImprimirTicket();
+                    imprimir.pritnTicket(venta);
 
-        }
+                    folio++;
+                    jLTicket.setText("" + folio);
+                    detalle = new ArrayList<>();
+                    String folio = String.format("%05d", this.folio);
+                    jLTicket.setText(folio);
+
+                    actualizarVenta();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error");
+                }
+
+            }
         }
 
     }//GEN-LAST:event_btnCobrarActionPerformed
@@ -884,20 +886,18 @@ public class Principal extends javax.swing.JFrame {
         ventanas.setLocationRelativeTo(this);
         ventanas.setResizable(false);
         ventanas.setVisible(true);
-        
-   //recuperar codigo
-   
-   String codigo = ventanas.getCodigo();
-        if (codigo != null) {
-            System.out.println("Si llego"+codigo);
-   hacerBusqueda2(codigo);
-        }
-        System.out.println("no paso nada");
 
+        //recuperar codigo
+        String codigo = ventanas.getCodigo();
+        if (codigo != null) {
+            System.out.println("Si llego" + codigo);
+            hacerBusqueda2(codigo);
+        }else{
+        System.out.println("no paso nada");
+        }
     }//GEN-LAST:event_btnBuscarnombreActionPerformed
 
-  
-    
+
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnClientesActionPerformed
@@ -931,6 +931,7 @@ public class Principal extends javax.swing.JFrame {
                 double descuento1 = subtotal * porcentajeDescuento / 100.0;
                 menosdecuento = subtotal - descuento1;
                 total = menosdecuento;
+                porcentaje = String.valueOf(descuento1);
                 jLTotal.setText(String.format("%.2f", menosdecuento));
                 System.out.println("Funciona el decuento");
                 Error1.setText("");
@@ -1018,7 +1019,7 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-   public void hacerBusqueda2(String codigos) {
+    public void hacerBusqueda2(String codigos) {
         String codigo = codigos;
         Producto productoDato = ab.BuscarProductoVenta(codigo);
         if (productoDato != null) {
@@ -1054,7 +1055,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void hacerBusqueda() {
         String codigo = jtbusqueda.getText();
-        
+
         Producto productoDato = ab.BuscarProductoVenta(codigo);
         if (productoDato != null) {
             // Verificar si ya existe una fila con el mismo código
