@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ventasregistros>
     <ventas>
-        <cambio>85.0</cambio>
-        <descuento>0</descuento>
+        <cambio>9.5</cambio>
+        <descuento>10</descuento>
         <detalle>
             <cambio>0.0</cambio>
             <cantidad>1</cantidad>
@@ -14,50 +14,34 @@
             <total>15.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-11T16:48:31.766-05:00</fecha>
-        <folio>1</folio>
-        <pago>100.0</pago>
-        <subtotal>15.0</subtotal>
-        <total>15.0</total>
-    </ventas>
-    <ventas>
-        <cambio>300.0</cambio>
-        <descuento>0</descuento>
         <detalle>
             <cambio>0.0</cambio>
-            <cantidad>20</cantidad>
+            <cantidad>1</cantidad>
             <codigo>002</codigo>
             <descripcion>colorante</descripcion>
             <descuento>0.0</descuento>
             <pagos>0.0</pagos>
             <precio>10.0</precio>
-            <total>200.0</total>
+            <total>10.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-11T16:50:33.100-05:00</fecha>
-        <folio>2</folio>
-        <pago>500.0</pago>
-        <subtotal>200.0</subtotal>
-        <total>200.0</total>
-    </ventas>
-    <ventas>
-        <cambio>37.25</cambio>
-        <descuento>15</descuento>
         <detalle>
             <cambio>0.0</cambio>
             <cantidad>1</cantidad>
-            <codigo>001</codigo>
-            <descripcion>Barras</descripcion>
+            <codigo>954</codigo>
+            <descripcion>Algodon</descripcion>
             <descuento>0.0</descuento>
             <pagos>0.0</pagos>
-            <precio>15.0</precio>
-            <total>15.0</total>
+            <precio>20.0</precio>
+            <total>20.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-11T16:51:14.437-05:00</fecha>
-        <folio>3</folio>
+        <fecha>2023-05-19T16:02:55.194-06:00</fecha>
+        <folio>1</folio>
+        <hora>4:02:55 p. m.</hora>
         <pago>50.0</pago>
-        <subtotal>15.0</subtotal>
-        <total>12.75</total>
+        <porcentaje>4.5</porcentaje>
+        <subtotal>45.0</subtotal>
+        <total>40.5</total>
     </ventas>
 </ventasregistros>

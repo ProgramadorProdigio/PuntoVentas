@@ -58,7 +58,11 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace pref="29" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
@@ -68,10 +72,11 @@
                                               </Group>
                                               <Component id="ErrorCantidad" min="-2" pref="118" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="29" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="32767" attributes="0"/>
@@ -81,10 +86,7 @@
                                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -93,7 +95,7 @@
                           <Component id="jPanel5" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace pref="65" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -137,7 +139,7 @@
                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="927" max="32767" attributes="0"/>
+                  <EmptySpace pref="941" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

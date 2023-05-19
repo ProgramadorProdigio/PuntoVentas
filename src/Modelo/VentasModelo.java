@@ -17,8 +17,9 @@ public class VentasModelo{
     private double total;
     private double cambio;
     private  double pago;
+  private String hora;
   
-    private List <TablaDetalleregistro> detalle;
+  private List <TablaDetalleregistro> detalle;
 
     public List<TablaDetalleregistro> getDetalle() {
         return detalle;
@@ -89,6 +90,14 @@ public class VentasModelo{
 
     public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
   
