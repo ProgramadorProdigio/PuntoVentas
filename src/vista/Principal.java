@@ -209,7 +209,6 @@ public class Principal extends javax.swing.JFrame {
         Error2 = new javax.swing.JLabel();
         Error4 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         jtModificarCantidad = new javax.swing.JTextField();
         ErrorCantidad = new javax.swing.JLabel();
         btnBuscarnombre = new javax.swing.JButton();
@@ -494,6 +493,7 @@ public class Principal extends javax.swing.JFrame {
         Error2.setForeground(new java.awt.Color(255, 51, 51));
 
         Error4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Error4.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -577,15 +577,14 @@ public class Principal extends javax.swing.JFrame {
         );
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imag/icons8-trash-can-48.png"))); // NOI18N
+        btnEliminar.setBorder(null);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
 
-        jLabel12.setText("Borrar Producto");
-
-        jtModificarCantidad.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
+        jtModificarCantidad.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         jtModificarCantidad.setForeground(new java.awt.Color(204, 204, 204));
         jtModificarCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -631,15 +630,13 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(navegacionPanelLayout.createSequentialGroup()
                                 .addGap(71, 71, 71)
                                 .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(navegacionPanelLayout.createSequentialGroup()
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE))
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(navegacionPanelLayout.createSequentialGroup()
                                         .addGap(41, 41, 41)
                                         .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(97, 591, Short.MAX_VALUE))))
+                                            .addComponent(ErrorCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -648,14 +645,11 @@ public class Principal extends javax.swing.JFrame {
                                         .addGap(18, 18, 18))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
                                         .addComponent(btnBuscarnombre)
-                                        .addGap(173, 173, 173)
+                                        .addGap(171, 171, 171)
                                         .addComponent(btnEliminar)
-                                        .addGap(91, 91, 91))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navegacionPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(75, 75, 75)))))
+                                        .addGap(93, 93, 93)))))
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         navegacionPanelLayout.setVerticalGroup(
             navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -673,18 +667,19 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96)
                         .addComponent(ErrorCantidad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnBuscarnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnEliminar))
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel12))
+                        .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(navegacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnBuscarnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtModificarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(navegacionPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar))))
                     .addGroup(navegacionPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(941, Short.MAX_VALUE))
         );
 
         getContentPane().add(navegacionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1470, 1880));
@@ -1093,7 +1088,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLTicket;
     public javax.swing.JLabel jLTotal;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

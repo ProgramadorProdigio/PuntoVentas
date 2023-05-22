@@ -12,12 +12,19 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.util.stream.Collectors;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -74,6 +81,96 @@ public class ReporteForm extends javax.swing.JDialog {
         String[] columnas = {"Folio", "Fecha", "Hora Registro", "Total"};
         DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
         tbDatos.setModel(modelo);
+        // Datos formateado
+        DefaultCategoryDataset datosgraficos = extraerDatosGrafivos(listaDatos);
+        // crear el grafico 
+        crearGrafico(datosgraficos);
+
+        //ponerlo en el panel
+        
+    }
+
+    private DefaultCategoryDataset extraerDatosGrafivos(List<VentasModelo> lista) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        HashMap<String, Double> mapa = new HashMap<>();
+        for (VentasModelo venta : lista) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(venta.getFecha());
+            int dia = calendar.get(Calendar.DAY_OF_WEEK);
+            double total = venta.getTotal();
+            String llevedia = numeroDia(dia);
+            double loqueseLleva = 0;
+            if (mapa.containsKey(llevedia)) {
+                loqueseLleva = mapa.get(llevedia);
+
+            }
+            mapa.put(llevedia, total + loqueseLleva);
+        }
+        for(var entrada : mapa.entrySet()){
+            String llave = entrada.getKey();
+            double valor = entrada.getValue();
+            dataset.addValue(valor, "Ventas dias", llave);
+        }
+        return dataset;
+    }
+
+    private String numeroDia(int dia) {
+        String dialetra = "";
+        switch (dia) {
+            case 1:
+                dialetra
+                        = "DOM";
+                break;
+            case 2:
+                dialetra
+                        = "LUN";
+                break;
+            case 3:
+                dialetra
+                        = "MAR";
+                break;
+            case 4:
+                dialetra
+                        = "MIE";
+                break;
+            case 5:
+                dialetra
+                        = "JUE";
+                break;
+            case 6:
+                dialetra
+                        = "VIE";
+                break;
+
+            case 7:
+                dialetra
+                        = "SAB";
+                break;
+
+        }
+
+        return dialetra;
+    }
+
+    private void crearGrafico(DefaultCategoryDataset datos) {
+        JFreeChart grafico = ChartFactory.createBarChart("ventas tienda", "Dias", "total", datos);
+        ChartPanel panel = new ChartPanel(grafico);
+        panel.setPreferredSize(jpanelGrafico.getSize());
+        // Obtener el objeto CategoryPlot del gráfico
+        CategoryPlot plot = grafico.getCategoryPlot();
+
+        // Cambiar el color de las barras
+        Color colorBarra = new Color(0, 128, 255); // Azul
+        plot.getRenderer().setSeriesPaint(0, colorBarra);
+// Personalizar otras características del gráfico
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setOutlineVisible(false);
+        plot.setInsets(new RectangleInsets(10, 10, 10, 10));
+
+        jpanelGrafico.removeAll();
+        jpanelGrafico.add(panel);
+        jpanelGrafico.updateUI();
+        jpanelGrafico.repaint();
     }
 
     private String[][] extraerDatos(List<VentasModelo> lista) {
@@ -106,10 +203,9 @@ public class ReporteForm extends javax.swing.JDialog {
         lia = new javax.swing.JLabel();
         txtFinal = new javax.swing.JFormattedTextField();
         TxtBuscar = new javax.swing.JTextField();
-        btnBuscador = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDatos = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        jpanelGrafico = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
         txtInicial = new javax.swing.JFormattedTextField();
@@ -166,8 +262,6 @@ public class ReporteForm extends javax.swing.JDialog {
             }
         });
 
-        btnBuscador.setText("jButton1");
-
         tbDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -180,17 +274,6 @@ public class ReporteForm extends javax.swing.JDialog {
             }
         ));
         jScrollPane1.setViewportView(tbDatos);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
-        );
 
         jButton2.setText("Reimprimir");
 
@@ -225,33 +308,29 @@ public class ReporteForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(112, 112, 112)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(111, 111, 111)
-                                .addComponent(btnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jButton2)
-                        .addGap(127, 127, 127)
-                        .addComponent(btnExportar)
-                        .addGap(134, 134, 134))
+                                .addComponent(btnActualizar))))
+                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(142, 142, 142)
+                                .addComponent(jButton2)
+                                .addGap(119, 119, 119)
+                                .addComponent(btnExportar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jpanelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,19 +350,19 @@ public class ReporteForm extends javax.swing.JDialog {
                         .addGap(27, 27, 27)
                         .addComponent(jLabel2)
                         .addGap(53, 53, 53)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscador))))
+                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jpanelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
-                            .addComponent(btnExportar)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                            .addComponent(btnExportar))
+                        .addGap(63, 63, 63))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,25 +400,29 @@ public class ReporteForm extends javax.swing.JDialog {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         String fechaInicial = txtInicial.getText();
         String fechaFinal = txtFinal.getText();
+
+        if (fechaInicial == null && fechaInicial.isEmpty() && fechaFinal == null && fechaFinal.isEmpty()) {
+            System.out.println("NO se hizo nada ");
+        }
+
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date1 = null;
         Date date2 = null;
+        Date fechaSumada = null;
         folio = null;
         try {
             date1 = dateFormat.parse(fechaInicial);
             date2 = dateFormat.parse(fechaFinal);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date2);
+            calendar.add(Calendar.DAY_OF_YEAR, +1);
+            fechaSumada = calendar.getTime();
+            filtrarDatos(date1, fechaSumada, folio);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date inicialFecha = date1;
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date finalFecha = date2;
-        filtrarDatos(inicialFecha, finalFecha, folio);
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -378,15 +461,14 @@ public class ReporteForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtBuscar;
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscador;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jpanelGrafico;
     private javax.swing.JLabel lia;
     private javax.swing.JTable tbDatos;
     private javax.swing.JFormattedTextField txtFinal;
