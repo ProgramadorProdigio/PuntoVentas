@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ventasregistros>
     <ventas>
-        <cambio>9.5</cambio>
-        <descuento>10</descuento>
+        <cambio>85.0</cambio>
+        <descuento>0</descuento>
         <detalle>
             <cambio>0.0</cambio>
             <cantidad>1</cantidad>
@@ -14,15 +14,58 @@
             <total>15.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
+        <fecha>2023-05-21T12:45:07.994-06:00</fecha>
+        <folio>1</folio>
+        <hora>12:45:07 p. m.</hora>
+        <pago>100.0</pago>
+        <subtotal>15.0</subtotal>
+        <total>15.0</total>
+    </ventas>
+    <ventas>
+        <cambio>4.2000000000000455</cambio>
+        <descuento>10</descuento>
         <detalle>
             <cambio>0.0</cambio>
             <cantidad>1</cantidad>
-            <codigo>002</codigo>
-            <descripcion>colorante</descripcion>
+            <codigo>744</codigo>
+            <descripcion>Oximetacolina nasal</descripcion>
             <descuento>0.0</descuento>
             <pagos>0.0</pagos>
-            <precio>10.0</precio>
-            <total>10.0</total>
+            <precio>30.0</precio>
+            <total>30.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>955</codigo>
+            <descripcion>Olarex Talco</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>30.0</precio>
+            <total>30.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>2501</codigo>
+            <descripcion>Agripen</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>20.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>275</codigo>
+            <descripcion>simi Brox</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>50.0</precio>
+            <total>50.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
         <detalle>
@@ -36,12 +79,199 @@
             <total>20.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-19T16:02:55.194-06:00</fecha>
-        <folio>1</folio>
-        <hora>4:02:55 p. m.</hora>
-        <pago>50.0</pago>
-        <porcentaje>4.5</porcentaje>
-        <subtotal>45.0</subtotal>
-        <total>40.5</total>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>002</codigo>
+            <descripcion>colorante</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>10.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>004</codigo>
+            <descripcion>ala</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>21.0</precio>
+            <total>42.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>003</codigo>
+            <descripcion>Bocina </descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>450.0</precio>
+            <total>450.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <fecha>2023-05-21T13:28:57.502-06:00</fecha>
+        <folio>2</folio>
+        <hora>1:28:57 p. m.</hora>
+        <pago>600.0</pago>
+        <porcentaje>66.2</porcentaje>
+        <subtotal>662.0</subtotal>
+        <total>595.8</total>
+    </ventas>
+    <ventas>
+        <cambio>359.20000000000005</cambio>
+        <descuento>10</descuento>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>3</cantidad>
+            <codigo>002</codigo>
+            <descripcion>colorante</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>10.0</precio>
+            <total>30.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>004</codigo>
+            <descripcion>ala</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>21.0</precio>
+            <total>42.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>003</codigo>
+            <descripcion>Bocina </descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>450.0</precio>
+            <total>450.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>5</cantidad>
+            <codigo>744</codigo>
+            <descripcion>Oximetacolina nasal</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>30.0</precio>
+            <total>150.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>742</codigo>
+            <descripcion>Oximetacolina Adulto</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>25.0</precio>
+            <total>25.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>964</codigo>
+            <descripcion>Cinta microporosa</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>15.0</precio>
+            <total>15.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <fecha>2023-05-21T13:32:51.508-06:00</fecha>
+        <folio>3</folio>
+        <hora>1:32:51 p. m.</hora>
+        <pago>1000.0</pago>
+        <porcentaje>71.2</porcentaje>
+        <subtotal>712.0</subtotal>
+        <total>640.8</total>
+    </ventas>
+    <ventas>
+        <cambio>2.7999999999999545</cambio>
+        <descuento>30</descuento>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>003</codigo>
+            <descripcion>Bocina </descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>450.0</precio>
+            <total>900.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>004</codigo>
+            <descripcion>ala</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>21.0</precio>
+            <total>21.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>001</codigo>
+            <descripcion>Barras</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>15.0</precio>
+            <total>30.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>3110</codigo>
+            <descripcion>Aspirina</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>5.0</precio>
+            <total>5.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>002</codigo>
+            <descripcion>colorante</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>10.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>2501</codigo>
+            <descripcion>Agripen</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>20.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <fecha>2023-05-21T13:35:07.744-06:00</fecha>
+        <folio>4</folio>
+        <hora>1:35:07 p. m.</hora>
+        <pago>700.0</pago>
+        <porcentaje>298.8</porcentaje>
+        <subtotal>996.0</subtotal>
+        <total>697.2</total>
     </ventas>
 </ventasregistros>

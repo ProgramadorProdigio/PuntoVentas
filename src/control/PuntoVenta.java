@@ -40,7 +40,7 @@ public class PuntoVenta {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Principal p = new Principal();
-                p.setLocationRelativeTo(null);
+                //p.setLocationRelativeTo(null);
                 p.setVisible(true);
              //   new Principal().setVisible(true);
             }
