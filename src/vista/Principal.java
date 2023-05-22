@@ -33,7 +33,7 @@ import vista.ventas.Ventas;
  * @author Miguel Angel Lara Hermosillo
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     public List<TablaDetalleregistro> detalle;
     private BasedatosVirtual ab;
     private int folio;// se alamcena el folio o numero de ticket
@@ -44,14 +44,14 @@ public class Principal extends javax.swing.JFrame {
     private int descuento; // Almacena el descuento de compra
     private double pagos; // varaiable que almacena el monto ingresado
     private double cambio; // varaible que almacena el cambio
-    
+
     private String porcentaje;// varaible que almacena el porcenta que se descintara
 
     /**
      * Creates new form Principal
      */
     public Principal() {
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
         clientes = new Clientes(); // crea una instancia de la clase Clientes
@@ -75,7 +75,7 @@ public class Principal extends javax.swing.JFrame {
         // Crea un nuevo CardLayout y un JPanel que servirá como contenedor
 
     }
-    
+
     private TablaDetalleregistro buscarRegistro(String codigoProducto) {
         for (TablaDetalleregistro registro : detalle) {
             if (registro.getCodigo().equals(codigoProducto)) {
@@ -84,29 +84,29 @@ public class Principal extends javax.swing.JFrame {
         }
         return null;
     }
-    
+
     public double actualizarVenta() {
-        
+
         String[] colums = {"Cantidad", "Descripcion", "Precio", "Total"};
         String[][] datos = extraerDatos();
-        
+
         DefaultTableModel model = new DefaultTableModel(datos, colums);
         jtablaVentas.setModel(model);
 
         // Calcular el precio total de la venta
         double subtotal = 0;
-        
+
         for (TablaDetalleregistro registro : detalle) {
             subtotal += registro.getTotal();
-            
+
         }
-        
+
         jLSUB.setText(String.format("%.2f", subtotal));
         jLTotal.setText(String.format("%.2f", subtotal));
-        
+
         return subtotal;
     }
-    
+
     private String[][] extraerDatos() {
         String[][] datos = new String[detalle.size()][4]; // Inicializa una matriz con el tamaño de la lista detalle y con 4 columnas.
         int i = 0; // Inicializa el índice del arreglo en cero.
@@ -124,11 +124,11 @@ public class Principal extends javax.swing.JFrame {
         total = subtotal;
         jLSUB.setText(String.format("%.2f", subtotal)); // Actualiza el valor del subtotal en la etiqueta jLSUB.
         jLTotal.setText(String.format("%.2f", total));
-        
+
         sub = subtotal;
         return datos; // Retorna la matriz con los datos extraídos.
     }
-    
+
     private String getFecha() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -140,11 +140,11 @@ public class Principal extends javax.swing.JFrame {
         LocalTime horaActual = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm:ss a");
         String horaFormateada = horaActual.format(formatter);
-        
+
         return horaFormateada;
-        
+
     }
-    
+
     OperacionesBasedatos bd;
 
     /**
@@ -704,12 +704,12 @@ public class Principal extends javax.swing.JFrame {
         ListaProductos vlista = new ListaProductos(this, true);
         vlista.setLocationRelativeTo(this);
         vlista.setVisible(true);
-        
+
     }//GEN-LAST:event_vtrProductosActionPerformed
 
     private void jtbusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbusquedaActionPerformed
         hacerBusqueda();
-        
+
 
     }//GEN-LAST:event_jtbusquedaActionPerformed
 
@@ -749,16 +749,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jLDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLDescuentoActionPerformed
-        
+
         hacerDescuento();
 
     }//GEN-LAST:event_jLDescuentoActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
-        
+
         if (jtablaVentas.getRowCount() == 0) {
-            System.out.println("La tabla está vacía");
+            System.out.println("La tabla está vacia");
             JOptionPane.showMessageDialog(null, "Lo sentimos no se puede realizar el cobro intente de nuevo");
+                    Error1.setText("");
+                    Error2.setText("");
+                    Error4.setText("");
+                    ErrorCantidad.setText("");
+                    jLDescuento.setText("");
+                    JLPago.setText("");
+                    jLCambio.setText("");
+        
         } else {
             if (pagos < total) {
                 Error4.setText("pago insuficiente");
@@ -775,35 +783,35 @@ public class Principal extends javax.swing.JFrame {
                 venta.setPago(pagos);
                 venta.setPorcentaje(porcentaje);
                 venta.setHora(getHoraActual());
-                
+
                 if (ab.guardarventa(venta)) {
                     System.out.println("Imprimiendo ");
                     ImprimirTicket imprimir = new ImprimirTicket();
                     imprimir.pritnTicket(venta);
-                    
+
                     folio++;
                     jLTicket.setText("" + folio);
                     detalle = new ArrayList<>();
                     String folio = String.format("%05d", this.folio);
                     jLTicket.setText(folio);
-                    
+
                     actualizarVenta();
                     System.out.println("La imprecion fue un exito");
+                    Error1.setText("");
+                    Error2.setText("");
+                    Error4.setText("");
+                    ErrorCantidad.setText("");
+                    jLDescuento.setText("");
+                    JLPago.setText("");
+                    jLCambio.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Ocurrio un error");
                 }
-                
+
             }
         }
-        
-        Error1.setText("");
-        Error2.setText("");
-        Error4.setText("");
-        ErrorCantidad.setText("");
-        jLDescuento.setText("");
-        JLPago.setText("");
-        jLCambio.setText("");
-        
+
+
     }//GEN-LAST:event_btnCobrarActionPerformed
 // cada ves que se ingresa un caracter desde el teclado automaticamente se ejecuta
     private void jLDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLDescuentoKeyReleased
@@ -815,15 +823,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_JLPagoKeyReleased
 //FocusGained es un evento importante en Java que permite a las aplicaciones detectar cuándo un componente ha ganado el enfoque del usuario y tomar medidas en consecuencia.
     private void jtModificarCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtModificarCantidadFocusGained
-        
+
         if (jtModificarCantidad.getText().equals("Ingresa cantidad")) {
             jtModificarCantidad.setText("");
             jtModificarCantidad.setForeground(Color.BLACK);
         }
-        
+
 
     }//GEN-LAST:event_jtModificarCantidadFocusGained
-    
+
 
     private void jtModificarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtModificarCantidadActionPerformed
         cantidad();
@@ -870,9 +878,9 @@ public class Principal extends javax.swing.JFrame {
         } else {
             System.out.println("no paso nada");
         }
-        
+
     }//GEN-LAST:event_btnBuscarnombreActionPerformed
-    
+
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
@@ -880,13 +888,13 @@ public class Principal extends javax.swing.JFrame {
 
     // metodo para realizar el decuento
     private double hacerDescuento() {
-        
+
         double menosdecuento = 0;
 
 // obetener lo del txtfield
         String txtfiel = jLDescuento.getText();
         try {
-            
+
             if (txtfiel.isEmpty()) {
                 Error1.setText("El valor del descuento no puede estar vacío");
                 Error1.setVisible(true);
@@ -895,12 +903,12 @@ public class Principal extends javax.swing.JFrame {
 
                 int descuento = (int) Double.parseDouble(txtfiel);
                 this.descuento = descuento;
-                
+
                 double subtotal = 0;
-                
+
                 for (TablaDetalleregistro registro : detalle) {
                     subtotal += registro.getTotal();
-                    
+
                 }
 // Calcular el descuento
                 double porcentajeDescuento = descuento;
@@ -913,18 +921,18 @@ public class Principal extends javax.swing.JFrame {
                 Error1.setText("");
                 Error1.setVisible(true);
             }
-            
+
         } catch (Exception e) {
             Error1.setText("solo ingrese numeros pocitivos");
             Error1.setVisible(true);
-            
+
         }
         return menosdecuento;
     }
 
     // codido donde se hace el pago y se regresa el cambio
     public double pago() {
-        
+
         double cambio = 0;
 // obetener lo del txtfield
         String importeapagar = JLPago.getText();
@@ -935,7 +943,7 @@ public class Principal extends javax.swing.JFrame {
                 Error2.setText("El valor del pago no puede estar vacío");
                 Error1.setVisible(true);
             } else {
-                
+
                 double total = Double.parseDouble(totalfull);
                 double pago = Double.parseDouble(importeapagar);
                 pagos = pago;
@@ -950,28 +958,28 @@ public class Principal extends javax.swing.JFrame {
                     System.out.println("cambio " + cambio);
                     Error2.setText(" ");
                     Error2.setVisible(true);
-                    
+
                 }
-                
+
             }
-            
+
             jLCambio.setText(String.format("%.2f", cambio));
-            
+
         } catch (Exception e) {
             Error2.setText("Solo ingrese numeros");
             Error2.setVisible(true);
-            
+
         }
         return cambio;
     }
 
     //Metodo que modifica la cantida de productos de un producto
     private int cantidad() {
-        
+
         int aumentacantidad = 0;
         try {
             String cantidadmas = jtModificarCantidad.getText();
-            
+
             int filaSeleccionada = jtablaVentas.getSelectedRow(); // Obtiene el índice de la fila seleccionada
 
             if (filaSeleccionada == -1) {
@@ -984,17 +992,17 @@ public class Principal extends javax.swing.JFrame {
                 actualizarVenta();
                 ErrorCantidad.setText("");
                 ErrorCantidad.setVisible(true);
-                
+
             }
         } catch (Exception e) {
             ErrorCantidad.setText("Ingrese solo numeros");
             ErrorCantidad.setVisible(true);
         }
-        
+
         return aumentacantidad;
-        
+
     }
-    
+
     public void hacerBusqueda2(String codigos) {
         String codigo = codigos;
         Producto productoDato = ab.BuscarProductoVenta(codigo);
@@ -1028,10 +1036,10 @@ public class Principal extends javax.swing.JFrame {
         }
         jtbusqueda.setText("");
     }
-    
+
     private void hacerBusqueda() {
         String codigo = jtbusqueda.getText();
-        
+
         Producto productoDato = ab.BuscarProductoVenta(codigo);
         if (productoDato != null) {
             // Verificar si ya existe una fila con el mismo código
