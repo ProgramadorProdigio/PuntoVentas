@@ -2,9 +2,13 @@ package vista.reporte;
 
 import Modelo.VentasModelo;
 import Modelo.Ventasregistros;
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import control.archivos.ArchivoCSV;
 import control.archivos.ArchivoXML;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,42 +16,59 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import  java.util.stream.Collectors;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author Miguel Angel lara Hermosillo
  */
 public class ReporteForm extends javax.swing.JDialog {
-private List<VentasModelo> ListaMostrada;
+
+    String folio = null;
+
+    private List<VentasModelo> ListaMostrada;
+
     public ReporteForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
         Ventasregistros objVenta = ArchivoXML.leerXML();
-      //  acomodarGrid(objVenta.getVentas());
-      Calendar calendar = Calendar.getInstance();
-      calendar.set(Calendar.HOUR, 0);
-      calendar.set(Calendar.MINUTE,0);
-       calendar.set(Calendar.SECOND,0);
-       Date inicialFecha = calendar.getTime();
-       calendar.add(Calendar.DAY_OF_MONTH,1);
-       Date finalFecha = calendar.getTime();
-       filtrarDatos(inicialFecha,finalFecha);
+        //  acomodarGrid(objVenta.getVentas());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date inicialFecha = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date finalFecha = calendar.getTime();
+        filtrarDatos(inicialFecha, finalFecha, folio);
 
     }
-    private void filtrarDatos(Date inicialFecha, Date finalFecha){
+
+    // Metodo que permite modificar de acuerdo al folio y alas fechas
+    private void filtrarDatos(Date inicialFecha, Date finalFecha, String folio) {
         Ventasregistros objVenta = ArchivoXML.leerXML();
-        List<VentasModelo> ListaFiltrada = objVenta.getVentas().stream().filter(v -> v.getFecha().after(inicialFecha) 
-                && v.getFecha().before(finalFecha)).collect(Collectors.toList());
-        acomodarGrid(ListaFiltrada);
-                
-         
+        List<VentasModelo> listaFiltrada;
+
+        if (folio != null && !folio.isEmpty()) {
+            listaFiltrada = objVenta.getVentas().stream()
+                    .filter(v -> v.getFecha().after(inicialFecha) && v.getFecha().before(finalFecha)
+                    && v.getFolio().equals(folio))
+                    .collect(Collectors.toList());
+        } else {
+            listaFiltrada = objVenta.getVentas().stream()
+                    .filter(v -> v.getFecha().after(inicialFecha) && v.getFecha().before(finalFecha))
+                    .collect(Collectors.toList());
+        }
+        System.out.println(inicialFecha);
+        System.out.println(finalFecha);
+        acomodarGrid(listaFiltrada);
     }
 
     public void acomodarGrid(List< VentasModelo> listaDatos) {
-      ListaMostrada = listaDatos;
+        ListaMostrada = listaDatos;
         String[][] datos = extraerDatos(listaDatos);
-        String[] columnas = {"Folio", "Fecha","Hora Registro", "Total"};
+        String[] columnas = {"Folio", "Fecha", "Hora Registro", "Total"};
         DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
         tbDatos.setModel(modelo);
     }
@@ -58,20 +79,19 @@ private List<VentasModelo> ListaMostrada;
         for (VentasModelo venta : lista) {
             arreglodatos[i][0] = venta.getFolio();
             arreglodatos[i][1] = fomatarFecha(venta.getFecha());
+            arreglodatos[i][2] = venta.getHora();
             arreglodatos[i][3] = String.format("$%.2f", venta.getTotal());
-            arreglodatos [i][2] = venta.getHora();
-              i++;
-          
+            i++;
         }
 
         return arreglodatos;
 
     }
-    private String fomatarFecha(Date date){
+
+    private String fomatarFecha(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         return format.format(date);
     }
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -129,6 +149,11 @@ private List<VentasModelo> ListaMostrada;
         }
 
         TxtBuscar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
+        TxtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtBuscarActionPerformed(evt);
+            }
+        });
 
         btnBuscador.setText("jButton1");
 
@@ -174,6 +199,11 @@ private List<VentasModelo> ListaMostrada;
         jLabel2.setText("Fecha Inicial");
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -260,22 +290,63 @@ private List<VentasModelo> ListaMostrada;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-   
+
         JFileChooser chooser = new JFileChooser();
-       chooser.setDialogTitle("Guardar archivo CSV");
-       chooser.setFileFilter(new FileNameExtensionFilter("Archivo CSV", "csv"));
-      
-      int respuesta = chooser.showSaveDialog(this);
-       if (respuesta== JFileChooser.APPROVE_OPTION) {
+        chooser.setDialogTitle("Guardar archivo CSV");
+        chooser.setFileFilter(new FileNameExtensionFilter("Archivo CSV", "csv"));
+
+        int respuesta = chooser.showSaveDialog(this);
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
             String ruta = chooser.getSelectedFile().getPath();
             ruta = !ruta.toLowerCase().endsWith(".csv")
-                    ?ruta+".csv":ruta;
-           boolean res = ArchivoCSV.crear(ruta,ListaMostrada);
-           if(res){
-               JOptionPane.showMessageDialog(this, "Se exporto");
-           }
+                    ? ruta + ".csv" : ruta;
+            boolean res = ArchivoCSV.crear(ruta, ListaMostrada);
+            if (res) {
+                JOptionPane.showMessageDialog(this, "Se exporto");
+            }
         }
     }//GEN-LAST:event_btnExportarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        String fechaInicial = txtInicial.getText();
+        String fechaFinal = txtFinal.getText();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date1 = null;
+        Date date2 = null;
+        folio = null;
+        try {
+            date1 = dateFormat.parse(fechaInicial);
+            date2 = dateFormat.parse(fechaFinal);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date inicialFecha = date1;
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date finalFecha = date2;
+        filtrarDatos(inicialFecha, finalFecha, folio);
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void TxtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtBuscarActionPerformed
+
+        String folio = TxtBuscar.getText();
+        this.folio = folio;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date inicialFecha = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date finalFecha = calendar.getTime();
+
+        filtrarDatos(inicialFecha, finalFecha, folio);
+
+    }//GEN-LAST:event_TxtBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
