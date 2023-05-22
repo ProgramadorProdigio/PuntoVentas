@@ -5,6 +5,7 @@ import Modelo.Ventasregistros;
 import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import control.archivos.ArchivoCSV;
 import control.archivos.ArchivoXML;
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,26 +43,28 @@ public class ReporteForm extends javax.swing.JDialog {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date finalFecha = calendar.getTime();
         filtrarDatos(inicialFecha, finalFecha, folio);
-
+        TxtBuscar.setText("Ingrese el folio a buscar");
+        TxtBuscar.setForeground(Color.GRAY);
     }
+    //  metodo que permite filtrar la tabla por medio del folio
 
-    // Metodo que permite modificar de acuerdo al folio y alas fechas
+    // Metodo que permite modificar de acuerdo al folio sobre el mismo dia y las fechas para buscar todas las ventas dentro de un rango
     private void filtrarDatos(Date inicialFecha, Date finalFecha, String folio) {
         Ventasregistros objVenta = ArchivoXML.leerXML();
         List<VentasModelo> listaFiltrada;
 
-        if (folio != null && !folio.isEmpty()) {
+        if (folio != null && !folio.isEmpty() && !"0".equals(folio)) {
+
             listaFiltrada = objVenta.getVentas().stream()
-                    .filter(v -> v.getFecha().after(inicialFecha) && v.getFecha().before(finalFecha)
-                    && v.getFolio().equals(folio))
-                    .collect(Collectors.toList());
+                    .filter(v -> v.getFolio().equals(folio)).collect(Collectors.toList());
+
+            acomodarGrid(listaFiltrada);
         } else {
             listaFiltrada = objVenta.getVentas().stream()
                     .filter(v -> v.getFecha().after(inicialFecha) && v.getFecha().before(finalFecha))
                     .collect(Collectors.toList());
         }
-        System.out.println(inicialFecha);
-        System.out.println(finalFecha);
+
         acomodarGrid(listaFiltrada);
     }
 
@@ -149,6 +152,14 @@ public class ReporteForm extends javax.swing.JDialog {
         }
 
         TxtBuscar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
+        TxtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TxtBuscarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TxtBuscarFocusLost(evt);
+            }
+        });
         TxtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtBuscarActionPerformed(evt);
@@ -343,10 +354,25 @@ public class ReporteForm extends javax.swing.JDialog {
         Date inicialFecha = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date finalFecha = calendar.getTime();
-
         filtrarDatos(inicialFecha, finalFecha, folio);
+        TxtBuscar.setText("");
 
     }//GEN-LAST:event_TxtBuscarActionPerformed
+
+    private void TxtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtBuscarFocusLost
+        // se borre cuando se pierda la ubicacion del puntero
+        TxtBuscar.setText("");
+        TxtBuscar.setText("Ingrese el folio a buscar");
+        TxtBuscar.setForeground(Color.GRAY);
+
+    }//GEN-LAST:event_TxtBuscarFocusLost
+
+    private void TxtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtBuscarFocusGained
+        if (TxtBuscar.getText().equals("Ingrese el folio a buscar")) {
+            TxtBuscar.setText("");
+            TxtBuscar.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_TxtBuscarFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
