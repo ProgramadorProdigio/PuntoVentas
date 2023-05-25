@@ -1,8 +1,11 @@
 package vista.reporte;
 
+import Modelo.TablaDetalleregistro;
 import Modelo.VentasModelo;
 import Modelo.Ventasregistros;
+import Util.ImprimirTicket;
 import com.sun.xml.bind.v2.runtime.output.SAXOutput;
+import control.ReimprimeElTicket;
 import control.archivos.ArchivoCSV;
 import control.archivos.ArchivoXML;
 import java.awt.Color;
@@ -87,7 +90,6 @@ public class ReporteForm extends javax.swing.JDialog {
         crearGrafico(datosgraficos);
 
         //ponerlo en el panel
-        
     }
 
     private DefaultCategoryDataset extraerDatosGrafivos(List<VentasModelo> lista) {
@@ -106,7 +108,7 @@ public class ReporteForm extends javax.swing.JDialog {
             }
             mapa.put(llevedia, total + loqueseLleva);
         }
-        for(var entrada : mapa.entrySet()){
+        for (var entrada : mapa.entrySet()) {
             String llave = entrada.getKey();
             double valor = entrada.getValue();
             dataset.addValue(valor, "Ventas dias", llave);
@@ -276,6 +278,11 @@ public class ReporteForm extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tbDatos);
 
         jButton2.setText("Reimprimir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btnExportar.setText("Exportar");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
@@ -403,26 +410,28 @@ public class ReporteForm extends javax.swing.JDialog {
 
         if (fechaInicial == null && fechaInicial.isEmpty() && fechaFinal == null && fechaFinal.isEmpty()) {
             System.out.println("NO se hizo nada ");
+        } else {
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date1 = null;
+            Date date2 = null;
+            Date fechaSumada = null;
+            folio = null;
+            try {
+                date1 = dateFormat.parse(fechaInicial);
+                date2 = dateFormat.parse(fechaFinal);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date2);
+                calendar.add(Calendar.DAY_OF_MONTH, +1);
+                fechaSumada = calendar.getTime();
+                System.out.println("Hola");
+                filtrarDatos(date1, fechaSumada, folio);
+                txtInicial.setText("");
+                txtFinal.setText("");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date date1 = null;
-        Date date2 = null;
-        Date fechaSumada = null;
-        folio = null;
-        try {
-            date1 = dateFormat.parse(fechaInicial);
-            date2 = dateFormat.parse(fechaFinal);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date2);
-            calendar.add(Calendar.DAY_OF_YEAR, +1);
-            fechaSumada = calendar.getTime();
-            filtrarDatos(date1, fechaSumada, folio);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -439,7 +448,8 @@ public class ReporteForm extends javax.swing.JDialog {
         Date finalFecha = calendar.getTime();
         filtrarDatos(inicialFecha, finalFecha, folio);
         TxtBuscar.setText("");
-
+        txtInicial.setText("");
+        txtFinal.setText("");
     }//GEN-LAST:event_TxtBuscarActionPerformed
 
     private void TxtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtBuscarFocusLost
@@ -457,7 +467,26 @@ public class ReporteForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_TxtBuscarFocusGained
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        
+        
+       
+        int filaSeleccionada = tbDatos.getSelectedRow();
+        String folios = tbDatos.getValueAt(filaSeleccionada, 0).toString();
+        
+      ReimprimeElTicket envio = new ReimprimeElTicket();
+      envio.reimprimeTicket(folio, folios, filaSeleccionada);
 
+       
+
+           
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+// metodo que me permite imprimir el tikcet de nueva cuenta
+    // sin ayuda de chatGPT xd
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtBuscar;
     private javax.swing.JButton btnActualizar;

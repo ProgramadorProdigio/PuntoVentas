@@ -36,7 +36,7 @@
             <total>450.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:45:08.588-05:00</fecha>
+        <fecha>2023-05-22T07:45:08.588-06:00</fecha>
         <folio>1</folio>
         <hora>8:45:08 a. m.</hora>
         <pago>500.0</pago>
@@ -69,7 +69,7 @@
             <total>30.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:48:08.716-05:00</fecha>
+        <fecha>2023-05-22T07:48:08.716-06:00</fecha>
         <folio>2</folio>
         <hora>8:48:08 a. m.</hora>
         <pago>100.0</pago>
@@ -102,7 +102,7 @@
             <total>50.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:48:31.811-05:00</fecha>
+        <fecha>2023-05-22T07:48:31.811-06:00</fecha>
         <folio>3</folio>
         <hora>8:48:31 a. m.</hora>
         <pago>500.0</pago>
@@ -135,7 +135,7 @@
             <total>10.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:48:40.602-05:00</fecha>
+        <fecha>2023-05-22T07:48:40.602-06:00</fecha>
         <folio>4</folio>
         <hora>8:48:40 a. m.</hora>
         <pago>50.0</pago>
@@ -168,7 +168,7 @@
             <total>21.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:49:01.004-05:00</fecha>
+        <fecha>2023-05-22T07:49:01.004-06:00</fecha>
         <folio>5</folio>
         <hora>8:49:01 a. m.</hora>
         <pago>500.0</pago>
@@ -201,11 +201,99 @@
             <total>450.0</total>
             <totaldetotal>0.0</totaldetotal>
         </detalle>
-        <fecha>2023-05-22T08:49:35.787-05:00</fecha>
+        <fecha>2023-05-22T07:49:35.787-06:00</fecha>
         <folio>6</folio>
         <hora>8:49:35 a. m.</hora>
         <pago>500.0</pago>
         <subtotal>460.0</subtotal>
         <total>460.0</total>
+    </ventas>
+    <ventas>
+        <cambio>300.0</cambio>
+        <descuento>50</descuento>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>001</codigo>
+            <descripcion>Barras</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>15.0</precio>
+            <total>15.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>002</codigo>
+            <descripcion>colorante</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>10.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>003</codigo>
+            <descripcion>Bocina </descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>450.0</precio>
+            <total>450.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>954</codigo>
+            <descripcion>Algodon</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>20.0</precio>
+            <total>20.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>2</cantidad>
+            <codigo>2501</codigo>
+            <descripcion>Agripen</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>20.0</precio>
+            <total>40.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>3110</codigo>
+            <descripcion>Aspirina</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>5.0</precio>
+            <total>5.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <detalle>
+            <cambio>0.0</cambio>
+            <cantidad>1</cantidad>
+            <codigo>275</codigo>
+            <descripcion>simi Brox</descripcion>
+            <descuento>0.0</descuento>
+            <pagos>0.0</pagos>
+            <precio>50.0</precio>
+            <total>50.0</total>
+            <totaldetotal>0.0</totaldetotal>
+        </detalle>
+        <fecha>2023-05-24T15:28:20.788-06:00</fecha>
+        <folio>7</folio>
+        <hora>3:28:20 p. m.</hora>
+        <pago>600.0</pago>
+        <porcentaje>300.0</porcentaje>
+        <subtotal>600.0</subtotal>
+        <total>300.0</total>
     </ventas>
 </ventasregistros>
